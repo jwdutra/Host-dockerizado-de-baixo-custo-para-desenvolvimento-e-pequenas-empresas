@@ -2,8 +2,7 @@
 
 Configurações de host de baixo custo com soluções Open Souce, dokerizado, contendo mensageria, banco de dados, servidor web, proxy reverso, certificados de segurança  e configurações de domínio.
 
-
-**Este projeto fornece configurações de infraestrutura de baixo custo e flexível baseada em containers Docker, adequada para hospedar aplicações modernas. Ele inclui configurações otimizadas para gerenciamento com Portainer, serviços de mensageria com Apache Kafka, banco de dados relacional PostgreSQL, proxy reverso NGINX, orquestração de tráfego com Traefik e integração com Cloudflare para segurança e performance e serviço de domínios.
+Este projeto fornece configurações de infraestrutura de baixo custo e flexível baseada em containers Docker, adequada para hospedar aplicações modernas. Ele inclui configurações otimizadas para gerenciamento com Portainer, serviços de mensageria com Apache Kafka, banco de dados relacional PostgreSQL, proxy reverso NGINX, orquestração de tráfego com Traefik e integração com Cloudflare para segurança e performance e serviço de domínios.
 
 ### Motivação
 
@@ -19,32 +18,32 @@ Este repositório é ideal para:
 
 ### Principais componentes do ambiente
 
-### Gerenciamento de contêineres:
+#### Gerenciamento de contêineres:
 
-* ### Docker e Docker Compose: Todos os serviços são configurados e orquestrados usando o Docker e Docker Compose, permitindo replicação rápida do ambiente em diferentes máquinas.
-* ### Portainer: Ferramenta para gerenciamento visual de contêineres Docker, simplificando operações de infraestrutura.
+* Docker e Docker Compose: Todos os serviços são configurados e orquestrados usando o Docker e Docker Compose, permitindo replicação rápida do ambiente em diferentes máquinas.
+* Portainer: Ferramenta para gerenciamento visual de contêineres Docker, simplificando operações de infraestrutura.
 
-### Proxy reverso e balanceamento de carga:
+#### Proxy reverso e balanceamento de carga:
 
-* ### Traefik: Proxy reverso e balanceador de carga dinâmico com suporte nativo para integrações Docker e certificados SSL via Cloudflare ou próprios com Letsencrypt.
+* Traefik: Proxy reverso e balanceador de carga dinâmico com suporte nativo para integrações Docker e certificados SSL via Cloudflare ou próprios com Letsencrypt.
 
-### Mensageria:
+#### Mensageria:
 
-* ### Apache Kafka: Plataforma de streaming distribuído para mensageria e processamento de eventos em tempo real.
-* ### UI for Apache Kafka: Interface gráfica para gerenciamento e monitoramento dos tópicos e mensagens no Kafka.
+* Apache Kafka: Plataforma de streaming distribuído para mensageria e processamento de eventos em tempo real.
+* UI for Apache Kafka: Interface gráfica para gerenciamento e monitoramento dos tópicos e mensagens no Kafka.
 
-### Banco de dados relacional:
+#### Banco de dados relacional:
 
-* ### PostgreSQL: Banco de dados relacional robusto, escalável e de código aberto.
-* ### PgAdmin 4: Ferramenta web para gerenciamento e administração do PostgreSQL.
+* PostgreSQL: Banco de dados relacional robusto, escalável e de código aberto.
+* PgAdmin 4: Ferramenta web para gerenciamento e administração do PostgreSQL.
 
-### Segurança e DNS:
+#### Segurança e DNS:
 
-* ### Cloudflare: Plataforma de serviços de segurança, desempenho e gerenciamento de DNS, incluindo provisionamento automático de certificados SSL.
+* Cloudflare: Plataforma de serviços de segurança, desempenho e gerenciamento de DNS, incluindo provisionamento automático de certificados SSL.
 
-### Servidor Web
+#### Servidor Web
 
-* ### NGINX: Servidor Web leve e amplamente usado no mercado para provimento de páginas e aplicações de Internet.
+* NGINX: Servidor Web leve e amplamente usado no mercado para provimento de páginas e aplicações de Internet.
 
 ### Benefícios
 
@@ -54,5 +53,3 @@ Este repositório é ideal para:
 * Observabilidade: Portainer oferece uma visão clara do estado e desempenho dos containers.
 
 A seguir, detalhamos as configurações de cada componente e instruções para implantação.
-
-**
