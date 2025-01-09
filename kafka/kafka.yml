@@ -1,114 +1,114 @@
-version: '3'
+version: '3'  # Define a versão do Docker Compose
 
-services:
+services:  # Define os serviços que serão executados
 
-  zookeeper:
-    image: confluentinc/cp-zookeeper:7.3.0
-    hostname: zookeeper
-    container_name: zookeeper
+  zookeeper:  # Serviço Zookeeper
+    image: confluentinc/cp-zookeeper:7.3.0  # Imagem do Zookeeper
+    hostname: zookeeper  # Nome do host
+    container_name: zookeeper  # Nome do container
     ports:
-      - "2181:2181"
+      - "2181:2181"  # Mapeamento de portas
     environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-    restart: always 
+      ZOOKEEPER_CLIENT_PORT: 2181  # Porta do cliente Zookeeper
+      ZOOKEEPER_TICK_TIME: 2000  # Tempo de tick do Zookeeper
+    restart: always  # Reiniciar sempre que necessário
     volumes:
-      - zookeeper_data:/var/lib/zookeeper/data
-      - zookeeper_log:/var/lib/zookeeper/log
+      - zookeeper_data:/var/lib/zookeeper/data  # Volume para dados do Zookeeper
+      - zookeeper_log:/var/lib/zookeeper/log  # Volume para logs do Zookeeper
     deploy:
       resources:
         limits:
-          cpus: '1.0'
-          memory: 1G
+          cpus: '1.0'  # Limite de CPU
+          memory: 1G  # Limite de memória
     logging:
-      driver: "json-file"
+      driver: "json-file"  # Driver de logging
       options:
-        max-size: "10m"
-        max-file: "3" 
+        max-size: "10m"  # Tamanho máximo do arquivo de log
+        max-file: "3"  # Número máximo de arquivos de log
 
-  kafka:
-    image: confluentinc/cp-server:7.3.0
-    hostname: kafka
-    container_name: kafka
+  kafka:  # Serviço Kafka
+    image: confluentinc/cp-server:7.3.0  # Imagem do Kafka
+    hostname: kafka  # Nome do host
+    container_name: kafka  # Nome do container
     depends_on:
-      - zookeeper
+      - zookeeper  # Dependência do Zookeeper
     ports:
-      - "9092:9092"
-      - "9094:9094"
+      - "9092:9092"  # Mapeamento de portas
+      - "9094:9094"  # Mapeamento de portas
     environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT,OUTSIDE:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://$HOST_IP:9092,OUTSIDE://host.docker.internal:9094
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      CONFLUENT_METRICS_ENABLE: 'false'
-      CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
+      KAFKA_BROKER_ID: 1  # ID do broker Kafka
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'  # Conexão com o Zookeeper
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT,OUTSIDE:PLAINTEXT  # Mapeamento de protocolos de segurança
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://$HOST_IP:9092,OUTSIDE://host.docker.internal:9094  # Listeners anunciados
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1  # Fator de replicação do tópico de offsets
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0  # Atraso inicial de reequilíbrio do grupo
+      KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1  # Fator de replicação do tópico de licença Confluent
+      KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: 1  # Fator de replicação do tópico de balanceamento Confluent
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1  # ISR mínimo do log de estado de transação
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1  # Fator de replicação do log de estado de transação
+      CONFLUENT_METRICS_ENABLE: 'false'  # Métricas Confluent desativadas
+      CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'  # ID do cliente de suporte Confluent
     volumes:
-      - kafka_data:/var/lib/kafka/data
+      - kafka_data:/var/lib/kafka/data  # Volume para dados do Kafka
     deploy:
       resources:
         limits:
-          cpus: '2.0'
-          memory: 2G
+          cpus: '2.0'  # Limite de CPU
+          memory: 2G  # Limite de memória
     logging:
-      driver: "json-file"
+      driver: "json-file"  # Driver de logging
       options:
-        max-size: "10m"
-        max-file: "3" 
-    restart: always  
+        max-size: "10m"  # Tamanho máximo do arquivo de log
+        max-file: "3"  # Número máximo de arquivos de log
+    restart: always  # Reiniciar sempre que necessário
 
-  control-center:
-    image: confluentinc/cp-enterprise-control-center:7.3.0
-    hostname: control-center
-    container_name: control-center
+  control-center:  # Serviço Control Center
+    image: confluentinc/cp-enterprise-control-center:7.3.0  # Imagem do Control Center
+    hostname: control-center  # Nome do host
+    container_name: control-center  # Nome do container
     depends_on:
-      - kafka
+      - kafka  # Dependência do Kafka
     ports:
-      - "9021:9021"
+      - "9021:9021"  # Mapeamento de portas
     environment:
-      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'kafka:29092'
-      CONTROL_CENTER_REPLICATION_FACTOR: 1
-      CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
-      CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
-      CONFLUENT_METRICS_TOPIC_REPLICATION: 1
-      PORT: 9021
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'kafka:29092'  # Servidores bootstrap do Control Center
+      CONTROL_CENTER_REPLICATION_FACTOR: 1  # Fator de replicação do Control Center
+      CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1  # Partições dos tópicos internos do Control Center
+      CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1  # Partições dos tópicos de interceptação de monitoramento do Control Center
+      CONFLUENT_METRICS_TOPIC_REPLICATION: 1  # Fator de replicação do tópico de métricas Confluent
+      PORT: 9021  # Porta do Control Center
     deploy:
       resources:
         limits:
-          cpus: '1.0'
-          memory: 1G
-    restart: always 
+          cpus: '1.0'  # Limite de CPU
+          memory: 1G  # Limite de memória
+    restart: always  # Reiniciar sempre que necessário
 
-  kafka-ui:
-    container_name: kafka-ui
-    image: provectuslabs/kafka-ui:latest
+  kafka-ui:  # Serviço Kafka UI
+    container_name: kafka-ui  # Nome do container
+    image: provectuslabs/kafka-ui:latest  # Imagem do Kafka UI
     depends_on:
-      - kafka 
-      - zookeeper
+      - kafka  # Dependência do Kafka
+      - zookeeper  # Dependência do Zookeeper
     ports:
-      - 8082:8080
+      - 8082:8080  # Mapeamento de portas
     environment:
-      KAFKA_CLUSTERS_0_NAME: local
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: 'kafka:29092'
-      KAFKA_CLUSTERS_0_ZOOKEEPER: 'zookeeper:2181'
+      KAFKA_CLUSTERS_0_NAME: local  # Nome do cluster Kafka
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: 'kafka:29092'  # Servidores bootstrap do cluster Kafka
+      KAFKA_CLUSTERS_0_ZOOKEEPER: 'zookeeper:2181'  # Conexão com o Zookeeper
     deploy:
       resources:
         limits:
-          cpus: '0.5'
-          memory: 512M
+          cpus: '0.5'  # Limite de CPU
+          memory: 512M  # Limite de memória
     logging:
-      driver: "json-file"
+      driver: "json-file"  # Driver de logging
       options:
-        max-size: "10m"
-        max-file: "3" 
-    restart: always  
+        max-size: "10m"  # Tamanho máximo do arquivo de log
+        max-file: "3"  # Número máximo de arquivos de log
+    restart: always  # Reiniciar sempre que necessário
 
-volumes:
-  zookeeper_data:
-  zookeeper_log:
-  kafka_data:    
+volumes:  # Definição dos volumes
+  zookeeper_data:  # Volume para dados do Zookeeper
+  zookeeper_log:  # Volume para logs do Zookeeper
+  kafka_data:  # Volume para dados do Kafka

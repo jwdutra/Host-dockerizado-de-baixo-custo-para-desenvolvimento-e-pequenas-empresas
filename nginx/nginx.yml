@@ -1,20 +1,20 @@
-version: "3.9"
+version: "3.9"  # Define a versão do Docker Compose
 
 services:
   app:
-    image: nginx
+    image: nginx  # Usa a imagem do NGINX
     networks:
-      - traefik-public
+      - traefik-public  # Conecta o serviço à rede traefik-public
     deploy:
       labels:
-        - "traefik.enable=true"
-        - "traefik.http.routers.nginx.service=nginx"
-        - "traefik.http.routers.nginx.rule=Host(`www.seudominio.com.br`)"
-        - "traefik.http.routers.nginx.entrypoints=websecure"
-        - "traefik.http.routers.nginx.tls.certresolver=letsencrypt"
-        - "traefik.http.services.nginx.loadbalancer.server.port=80" 
-        - "traefic.http.routers.nginx.tls=true"
+        - "traefik.enable=true"  # Habilita o Traefik para este serviço
+        - "traefik.http.routers.nginx.service=nginx"  # Define o serviço do Traefik como nginx
+        - "traefik.http.routers.nginx.rule=Host(`www.seudominio.com.br`)"  # Define a regra de roteamento do Traefik baseada no host
+        - "traefik.http.routers.nginx.entrypoints=websecure"  # Define o ponto de entrada como websecure
+        - "traefik.http.routers.nginx.tls.certresolver=letsencrypt"  # Usa o Let's Encrypt para resolver o certificado TLS
+        - "traefik.http.services.nginx.loadbalancer.server.port=80"  # Define a porta do servidor do balanceador de carga como 80
+        - "traefic.http.routers.nginx.tls=true"  # Habilita TLS para o roteador nginx
 
 networks:
   traefik-public:
-    external: true
+    external: true  # Define que a rede traefik-public é externa

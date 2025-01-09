@@ -1,51 +1,48 @@
-version: "3.9"
+version: "3.9"  # Versão do Docker Compose
 
 services:
   traefik:
-    image: traefik:v2.10
+    image: traefik:v2.10  # Imagem do Traefik
     command:
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.swarmMode=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--providers.docker.network=traefik-public"
-      - "--providers.docker.endpoint=unix:///var/run/docker.sock"
+      - "--api.insecure=true"  # Habilita a API do Traefik de forma insegura (não recomendado para produção)
+      - "--providers.docker=true"  # Habilita o provedor Docker
+      - "--providers.docker.swarmMode=true"  # Habilita o modo Swarm do Docker
+      - "--providers.docker.exposedbydefault=false"  # Desabilita a exposição de serviços por padrão
+      - "--entrypoints.web.address=:80"  # Define o endpoint HTTP na porta 80
+      - "--entrypoints.websecure.address=:443"  # Define o endpoint HTTPS na porta 443
+      - "--providers.docker.network=traefik-public"  # Define a rede Docker a ser usada
+      - "--providers.docker.endpoint=unix:///var/run/docker.sock"  # Define o endpoint Docker
 
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
-      - "--certificatesresolvers.letsencrypt.acme.email=[seu email]"
-      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"  # Configura o desafio HTTP para Let's Encrypt
+      - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"  # Habilita o desafio TLS para Let's Encrypt
+      - "--certificatesresolvers.letsencrypt.acme.email=[seu email]"  # Define o email para Let's Encrypt
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"  # Define o local de armazenamento dos certificados
     ports:
-      - "80:80"          # Entrada HTTP
-      - "443:443"        # Entrada HTTPS
-      - "8080:8080"      # Painel do Traefik 
+      - "80:80"  # Mapeia a porta 80 do host para a porta 80 do container (HTTP)
+      - "443:443"  # Mapeia a porta 443 do host para a porta 443 do container (HTTPS)
+      - "8080:8080"  # Mapeia a porta 8080 do host para a porta 8080 do container (Painel do Traefik)
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - traefik-certificates:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock:ro  # Monta o socket Docker no container
+      - traefik-certificates:/letsencrypt  # Monta o volume para armazenar certificados
     networks:
-      - traefik-public
+      - traefik-public  # Conecta o serviço à rede traefik-public
     deploy:
       placement:
         constraints:
-          - node.role == manager
-        placement:
-          constraints:
-            - node.role == manager
+          - node.role == manager  # Restringe a execução do serviço aos nós com a função de manager
         resources:
           limits:
-            memory: 512M 
-    restart: always  
+            memory: 512M  # Limita o uso de memória a 512MB
+    restart: always  # Reinicia o container automaticamente em caso de falha
     logging:
-      driver: "json-file"
+      driver: "json-file"  # Define o driver de log como json-file
       options:
-        max-size: "10m"
-        max-file: "3"
+        max-size: "10m"  # Define o tamanho máximo do arquivo de log como 10MB
+        max-file: "3"  # Define o número máximo de arquivos de log como 3
 
 volumes:
-  traefik-certificates:
+  traefik-certificates:  # Define o volume para armazenar certificados
 
 networks:
   traefik-public:
-    external: true
+    external: true  # Define que a rede traefik-public é externa

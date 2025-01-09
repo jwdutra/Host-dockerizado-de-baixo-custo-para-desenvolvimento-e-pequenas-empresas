@@ -1,55 +1,60 @@
+# Define a versão do arquivo de configuração do Docker Compose
 version: '3.2'
 
 services:
+  # Serviço do agente Portainer
   agent:
-    image: portainer/agent:2.21.5
+    image: portainer/agent:2.21.5  # Imagem do agente Portainer
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /var/lib/docker/volumes:/var/lib/docker/volumes
+      - /var/run/docker.sock:/var/run/docker.sock  # Monta o socket Docker
+      - /var/lib/docker/volumes:/var/lib/docker/volumes  # Monta os volumes Docker
     networks:
-      - agent_network
+      - agent_network  # Conecta o serviço à rede agent_network
     deploy:
-      mode: global
+      mode: global  # Implanta o serviço em todos os nós do cluster
       placement:
-        constraints: [node.platform.os == linux]
+        constraints: [node.platform.os == linux]  # Restringe a implantação a nós Linux
 
+  # Serviço Portainer
   portainer:
-    image: portainer/portainer-ce:2.21.5
-    command: -H tcp://tasks.agent:9001 --tlsskipverify
+    image: portainer/portainer-ce:2.21.5  # Imagem do Portainer CE
+    command: -H tcp://tasks.agent:9001 --tlsskipverify  # Comando para conectar ao agente
     #ports:
-    #  - "9443:9443"
-    #  - "9000:9000"
-    #  - "8000:8000"
+    #  - "9443:9443"  # Porta HTTPS (comentada)
+    #  - "9000:9000"  # Porta HTTP (comentada)
+    #  - "8000:8000"  # Porta Edge (comentada)
     volumes:
-      - portainer_data:/data
+      - portainer_data:/data  # Monta o volume de dados do Portainer
     networks:
-      - agent_network
-      - traefik-public
+      - agent_network  # Conecta o serviço à rede agent_network
+      - traefik-public  # Conecta o serviço à rede traefik-public
     deploy:
-      mode: replicated
-      replicas: 1
+      mode: replicated  # Implanta o serviço em modo replicado
+      replicas: 1  # Número de réplicas
       placement:
-        constraints: [node.role == manager]
+        constraints: [node.role == manager]  # Restringe a implantação a nós gerenciadores
       labels:
-        - "traefik.enable=true"
-        - "traefik.http.routers.portainer.rule=Host(`portainer.seudominio.com.br`)"
-        - "traefik.http.routers.portainer.entrypoints=websecure"
-        - "traefik.http.routers.portainer.tls.certresolver=letsencrypt"
-        - "traefik.http.routers.portainer.service=portainer"
-        - "traefik.http.services.portainer.loadbalancer.server.port=9000" 
-        - "traefic.http.routers.portainer.tls=true"
+        - "traefik.enable=true"  # Habilita o Traefik para este serviço
+        - "traefik.http.routers.portainer.rule=Host(`portainer.seudominio.com.br`)"  # Define a regra de roteamento do Traefik
+        - "traefik.http.routers.portainer.entrypoints=websecure"  # Define o ponto de entrada seguro
+        - "traefik.http.routers.portainer.tls.certresolver=letsencrypt"  # Define o resolvedor de certificados TLS
+        - "traefik.http.routers.portainer.service=portainer"  # Define o serviço do Traefik
+        - "traefik.http.services.portainer.loadbalancer.server.port=9000"  # Define a porta do balanceador de carga
+        - "traefic.http.routers.portainer.tls=true"  # Habilita TLS para o roteador
     logging:
-      driver: "json-file"
+      driver: "json-file"  # Define o driver de logging
       options:
-        max-size: "10m"
-        max-file: "3"
+        max-size: "10m"  # Tamanho máximo do arquivo de log
+        max-file: "3"  # Número máximo de arquivos de log
 
+# Definição das redes
 networks:
   agent_network:
-    driver: overlay
-    attachable: true
+    driver: overlay  # Define o driver de rede como overlay
+    attachable: true  # Permite que containers se conectem a esta rede
   traefik-public:
-    external: true
+    external: true  # Define a rede como externa
 
+# Definição dos volumes
 volumes:
-  portainer_data:
+  portainer_data:  # Volume para armazenar dados do Portainer
