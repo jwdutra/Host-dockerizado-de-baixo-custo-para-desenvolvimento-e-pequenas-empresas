@@ -2,7 +2,7 @@
 
 Configurações de host de baixo custo com soluções Open Souce, dokerizado, contendo mensageria, banco de dados, servidor web, proxy reverso, certificados de segurança  e configurações de domínio.
 
-Este projeto fornece configurações de infraestrutura de baixo custo e flexível baseada em containers Docker, adequada para hospedar aplicações modernas. Ele inclui configurações otimizadas para gerenciamento com Portainer, serviços de mensageria com Apache Kafka, banco de dados relacional PostgreSQL, proxy reverso NGINX, orquestração de tráfego com Traefik e integração com Cloudflare para segurança e performance e serviço de domínios.
+Este projeto fornece configurações de infraestrutura de baixo custo e flexível baseada em containers Docker, adequada para hospedar aplicações modernas. Ele inclui configurações otimizadas para gerenciamento com Portainer, serviços de mensageria com Apache Kafka, banco de dados relacional PostgreSQL, Servidor web  NGINX, orquestração de tráfego e provimento de SSL com Traefik e integração com Cloudflare para segurança e performance e serviço de domínios.
 
 ### Motivação
 
@@ -52,23 +52,21 @@ Este repositório é ideal para:
 * Segurança: Certificados TLS gerenciados automaticamente pelo Traefik em conjunto com a proteção oferecida pela Cloudflare.
 * Observabilidade: Portainer oferece uma visão clara do estado e desempenho dos containers.
 
-
 ### Implementação
 
-#### Qual servidor contratar e usar?
-
+#### Qual host contratar?
 
 Para efeito de desenvolvimento, alguns recursos deste ambiente podem ser configurados localmente. É possível ter um ambiente Docker na própria máquina com vários recursos, porém, alguns outros, como criptografia e serviço de domínio só se consegue em ambientes remotos com serviços ligados à Internet.
 
-A vantagem de se ter um host na Internet, é que se aproxima muito de um ambiente profissional, sendo possível já disponibilizar aplicações em ambiente real. A intenção é que, desenvolvedores trabalhem o código localmente e depois subam a aplicação, já disponibilizando na Internet.
+A vantagem de se ter um host na Internet é que se aproxima muito de um ambiente profissional, sendo possível já disponibilizar aplicações em ambiente real. A intenção é que, desenvolvedores trabalhem o código localmente e depois subam a aplicação para o host, já disponibilizando na Internet.
 
-Máquinas em nuvem em ambientes profissionais como AWS, GCP, Azure e até mesmo Digitalocean, disponibilizam máquinas bem baratas, porém muito carentes dos recursos necessários para um ambiente como este, que demanda mais recursos de máquina como memória, CPU e espaço em disco.
+Serviços em nuvem em ambientes profissionais como AWS, GCP, Azure e até mesmo Digitalocean, disponibilizam máquinas bem baratas, porém podem se tornar caros  para iniciar com recursos necessários para um ambiente como este, que demanda mais poder de máquina como memória, CPU e espaço em disco.
 
 Uma solução seria investir um pouco mais nos recursos, tornando os valores inviáveis, ou partir para outra solução barata no mercado, que são os VPSs.
 
-Apesar de não ser o ideal, permite que tudo seja instalado e funcione muito bem, tanto para desenvolvedores quanto para empresas pequenas, e o fato de estar dockerizado e modularizado e com possível clusterização, permite que seja migrado facilmente para um ambiente mais robusto e profissional.
+Apesar de não ser o ideal, permite que tudo seja instalado e funcione muito bem, tanto para desenvolvedores quanto para empresas pequenas que estão iniciando, e o fato de estar dockerizado e modularizado e com possível clusterização, permite que seja migrado facilmente para um ambiente mais robusto e profissional.
 
-Implantei estes recursos em um VPS e ficou bem satisfatório e barato.
+Todos os serviços foram implantados em um VPS de baixo custo, ficando bem satisfatório e barato.
 
 * Núcleos de CPU: 2
 * Memória: 8 GB
@@ -79,19 +77,17 @@ O consumo dos recursos (apenas instalação) ficou muito satisfatório, sobrando
 
 ![](https://lh7-rt.googleusercontent.com/docsz/AD_4nXez87GNjf1mOAIDbo0pJhfu8px0iElq9LGrofhLvVX9__6Hc2hvUdlKiLyBuj7glUdS9XgF9yheMd3Hiy306g3AfyHHcSsgZ_1Sn9fddwRPWeOyXdz2mI61-92MrBc1csA2At_2Vw?key=NZsbhft-UgpfY2ZKTYnezWgM)
 
-
 #### Implantação dos serviços
 
-O objetivo não é ensinar detalhadamente os conceitos e pormenores de cada recurso, mas sim, partindo do pressuposto que já se tenha noção dos mesmos ou que se busque obtê-los, pretendo mostrar os meios de configurá-los e instalá-los em um ambiente dockerizado.
+O objetivo não é ensinar detalhadamente os conceitos e pormenores de cada recurso, mas sim, partindo do pressuposto que já se tenha noção dos mesmos ou que se busque obtê-los, procura-se mostrar os meios de configurá-los e instalá-los em um ambiente dockerizado.
 
 Procure estudar sobre os recursos acessando os links que estão presentes no documento.
 
-
 #### O VPS e o SO.
 
-Pesquise na Internet sobre os vários serviços de VPS disponíveis.
+Aopós pesquisas na Internet sobre os vários serviços de VPS disponíveis.
 
-Usei na implementação um VPS Hostinger (não é propaganda), após pesquisar, é um dos que tem melhor custo/benefício, e com menor latência, por ter servidores no Brasil.
+Foi usado na implementação um VPS Hostinger (não é propaganda), sendo um dos que tem melhor custo/benefício, e com menor latência, por ter servidores no Brasil.
 
 [https://www.hostinger.com.br/servidor-vps](https://www.hostinger.com.br/servidor-vps)
 
@@ -99,14 +95,13 @@ Opte por, pelo menos, um KVM2 e instale um SO Linux
 
 ![](https://lh7-rt.googleusercontent.com/docsz/AD_4nXc4L40EGzNiXzH3ayYZefCFIKDa3nDJPlcC33fud92uqmHwCc6DfCfkATdABGKgGJBt6HgsIKWFogmCnJ0WAXQ9W_pRO9a3ndkYDCy_MWcZ_oKXh3BK3OTf7RQiB4Ic3HGZsf2e?key=NZsbhft-UgpfY2ZKTYnezWgM)
 
-Docker e Docker compose.
+Instale o Docker e Docker compose.
 
 [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/)
 
 [https://docs.docker.com/desktop/setup/install/linux/ubuntu/](https://docs.docker.com/desktop/setup/install/linux/ubuntu/)
 
 Instale o Docker e Docker Compose como orientado nos links.
-
 
 #### Portainer
 
@@ -140,7 +135,6 @@ Opte por instalar os arquivos como stack dentro do portainer, pois assim será m
 
 ![](https://lh7-rt.googleusercontent.com/docsz/AD_4nXfPqb8GMG5DPR9EkPzed1VgC6VoU5w9CtNkdjlV-ER3utnD19iykHAVCoydk0OQK27IVDNlp-Z07o6Oe48W7UqLMo7SZTjl2wNBUGUZMbfrK3ztJleAQ6JbcaUCxxZBKd0mrhSG0w?key=NZsbhft-UgpfY2ZKTYnezWgM)
 
-
 #### Clourflare
 
 [https://www.cloudflare.com/pt-br/](https://www.cloudflare.com/pt-br/)
@@ -160,7 +154,6 @@ Com isto, você estará a caminho de ter um acesso aos recursos do seu host por 
 Os próximos passos serão instalar os recursos no host e fazer os registros no CloudFlare.
 
 ![](https://lh7-rt.googleusercontent.com/docsz/AD_4nXfOFBcrd33N4N1c5-cYYIvM-YA2Jqjdt_fQnxoF61HBi4nRauq574wFHNS6Y3Ym8uDlB3K_xs8f4JgbDY3u1cPKtdZ1s1AdqxmeAXFfzmjJhDrSWlKzPUz0TcUyvBu09Gv1wuBpCA?key=NZsbhft-UgpfY2ZKTYnezWgM)
-
 
 #### Traefik
 
@@ -191,8 +184,6 @@ Todos os serviços que forem acessados através do Traefik precisam ser configur
 Como exemplo, temos uma configuração de servidor web.
 
 ![](https://lh7-rt.googleusercontent.com/docsz/AD_4nXfj1T3nD3Ip6fGs8EvxU9BI9v8GhqqUklIEVL4c8JdamNsIL6dhUh6aqbeu9Q7LLAuQG9vMoJ58B_4OpIYxWCy0eHt7mpELjPLLNZ-IRR2Tn8ub3pDJtS_wzUz4ys4K9yamRLYQUg?key=NZsbhft-UgpfY2ZKTYnezWgM)
-
-
 
 #### Kafka
 
@@ -232,8 +223,6 @@ Além destas aplicações instaladas no docker-compose, existem no repositório 
 
 ![](https://lh7-rt.googleusercontent.com/docsz/AD_4nXdwkY8v3QEd30CB0KXC5XTjxUoR9-98oO2KArH4rTPK5efcu_gvF3rl_BpUR7-A66DDXS9xhmnZfOCP6CvXTDvG7zAx4JW_X4oIHkkkt6n81vc7mat4LdpLaD3o6BNLxyDmgkYSLg?key=NZsbhft-UgpfY2ZKTYnezWgM)
 
-
-
 #### Banco de dados PostgreSQL
 
 [https://www.postgresql.org/](https://www.postgresql.org/)
@@ -248,8 +237,6 @@ Também neste arquivo há uma aplicação que permite gerenciar o banco visualme
 
 ![](https://lh7-rt.googleusercontent.com/docsz/AD_4nXfSdt2iz3uLjz0ZYZ5V9YJfl9QDcV6OIEh4wgzZOJOH6Z83SqtHeL9oTyMesbhKoMlFdbCmXnOaTtcH-Zzq4UHlg8snJC6HGG-v5Xj4lmbgV8-rSabcXB-bV440MDV_fvR2jx2-Lw?key=NZsbhft-UgpfY2ZKTYnezWgM)
 
-
-
 #### Servidor Web NgInx
 
 https://nginx.org/
@@ -258,6 +245,5 @@ A última configuração é um servidor Web, já com configuração de nome e do
 
 ![](https://lh7-rt.googleusercontent.com/docsz/AD_4nXeDjteHxHOd8o_Oi2bJwk56b3L2bmwSNOY6bXTqkLMztpjJu46J4qFIlK0mWJUYko-mpjOhalaHMJtyR97XGlrD_uoeEjFrmsVPzIc1theE1Cz2O-vqhtuxUEyuZRj_AmilV6pM0Q?key=NZsbhft-UgpfY2ZKTYnezWgM)
 
-Conclusão
 
-Para trabalhar em alto nível, desenvolvedores
+Assim terminam as informações sobre esta configuração.
