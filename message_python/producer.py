@@ -3,7 +3,7 @@ import time
 
 # Configuração do Producer
 conf = {
-    'bootstrap.servers': '[ip do host]:9092',  # Endereço do Kafka Broker
+    'bootstrap.servers': '[ip ou nome do host]:9092',  # Endereço do Kafka Broker
     'client.id': 'python-producer'
 }
 

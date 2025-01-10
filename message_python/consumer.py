@@ -2,7 +2,7 @@ from confluent_kafka import Consumer, KafkaException
 
 # Configuração do Consumer
 conf = {
-    'bootstrap.servers': '[ip do host]:9092',  # Endereço do Kafka Broker
+    'bootstrap.servers': '[ip do ou nome do host]:9092',  # Endereço do Kafka Broker
     'group.id': 'python-consumer-group',
     'auto.offset.reset': 'earliest'
 }
