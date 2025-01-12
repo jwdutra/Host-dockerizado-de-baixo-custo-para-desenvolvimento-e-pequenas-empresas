@@ -97,9 +97,8 @@ Opte por, pelo menos, um KVM2 e instale um SO Linux
 
 Instale o Docker e Docker compose.
 
-[https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/)
+[https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/)
 
-[https://docs.docker.com/desktop/setup/install/linux/ubuntu/](https://docs.docker.com/desktop/setup/install/linux/ubuntu/)
 
 Instale o Docker e Docker Compose como orientado nos links.
 
