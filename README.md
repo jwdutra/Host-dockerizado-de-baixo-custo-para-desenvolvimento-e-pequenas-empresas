@@ -2,7 +2,7 @@
 
 Configurações de host de baixo custo com soluções Open Souce, dokerizado, contendo mensageria, banco de dados, servidor web, proxy reverso, certificados de segurança  e configurações de domínio.
 
-Este projeto fornece configurações de infraestrutura de baixo custo e flexível baseada em containers Docker, adequada para hospedar aplicações modernas. Ele inclui configurações otimizadas para gerenciamento com Portainer, serviços de mensageria com Apache Kafka, banco de dados relacional PostgreSQL, Servidor web  NGINX, orquestração de tráfego e provimento de SSL com Traefik e integração com Cloudflare para segurança e performance e serviço de domínios.
+Este projeto fornece configurações de infraestrutura de baixo custo e flexível baseada em containers Docker, adequada para hospedar aplicações modernas. Ele inclui configurações otimizadas para gerenciamento com Portainer, serviços de mensageria com Apache Kafka, banco de dados relacional PostgreSQL, Servidor web  NGINX, orquestração de tráfego e provimento de SSL com Traefik e integração com Cloudflare para segurança, performance e serviço de domínios.
 
 ### Motivação
 
