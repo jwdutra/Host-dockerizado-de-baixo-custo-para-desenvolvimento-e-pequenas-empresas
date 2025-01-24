@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  minio:
+    image: minio/minio:latest
+    ports:
+      - "9900:9000" # Porta da API MinIO
+      - "9901:9001" # Porta do painel de administração MinIO
+    environment:
+      - MINIO_ROOT_USER=<seu usuario> # Usuário root
+      - MINIO_ROOT_PASSWORD=<sia senha> # Senha root
+    command: server /data --console-address ":9901"
+    volumes:
+      - minio-data:/data # Volume persistente para armazenar dados
+    deploy:
+      labels:
+        - "traefik.enable=true" # Ativa integração com o Traefik
+
+        - "traefik.http.routers.minio.service=minio"
+        - "traefik.http.routers.minio.rule=Host(`$HOST_NAME`)" # Define o domínio público do MinIO
+        - "traefik.http.routers.minio.entrypoints=websecure" # EntryPoint seguro com TLS
+        - "traefik.http.routers.minio.tls.certresolver=letsencrypt"
+        - "traefik.http.routers.minio.tls=true" # Ativa TLS para o domínio
+        - "traefik.http.services.minio.loadbalancer.server.port=9900" # Porta da API MinIO
+
+        - "traefik.http.routers.minio-console.service=minio-console"
+        - "traefik.http.routers.minio-console.rule=Host(`$CONSOLE_NAME`)" # Define domínio para o console
+        - "traefik.http.routers.minio-console.entrypoints=websecure" # EntryPoint seguro para o console
+        - "traefik.http.routers.minio-console.tls.certresolver=letsencrypt"
+        - "traefik.http.routers.minio-console.tls=true" # Ativa TLS para o console
+        - "traefik.http.services.minio-console.loadbalancer.server.port=9901" # Porta do console
+
+    networks:
+      - traefik-public # Rede externa para comunicação com o Traefik
+      - minio-network # Rede externa para comunicação com outras aplicações
+
+networks:
+  traefik-public:
+    external: true # Rede externa já gerenciada pelo Traefik
+  minio-network:
+    external: true # Rede externa compartilhada entre aplicações
+
+volumes:
+  minio-data:
+    driver: local

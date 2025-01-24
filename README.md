@@ -45,6 +45,10 @@ Este repositório é ideal para:
 
 * NGINX: Servidor Web leve e amplamente usado no mercado para provimento de páginas e aplicações de Internet.
 
+#### Gerenciamento de dados não estruturados
+
+* MinIO: MinIO é uma plataforma de armazenamento de objetos de alta performance, compatível com o protocolo S3 da Amazon, projetada para armazenar grandes volumes de dados não estruturados.Servidor Web leve e amplamente usado no mercado para provimento de páginas e aplicações de Internet
+
 ### Benefícios
 
 * Modularidade: Cada serviço é isolado em seu próprio container, permitindo manutenção e atualizações sem impacto geral.
@@ -98,7 +102,6 @@ Opte por, pelo menos, um KVM2 e instale um SO Linux
 Instale o Docker e Docker compose.
 
 [https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/)
-
 
 Instale o Docker e Docker Compose como orientado nos links.
 
@@ -240,9 +243,20 @@ Também neste arquivo há uma aplicação que permite gerenciar o banco visualme
 
 https://nginx.org/
 
-A última configuração é um servidor Web, já com configuração de nome e domínio, também com HTTPS configurado no Traefik. Lembrando é preciso  configurar um nome no Cloudflare.
+Servidor Web, já com configuração de nome e domínio, também com HTTPS configurado no Traefik. Lembrando é preciso  configurar um nome no Cloudflare.
 
 ![](https://lh7-rt.googleusercontent.com/docsz/AD_4nXeDjteHxHOd8o_Oi2bJwk56b3L2bmwSNOY6bXTqkLMztpjJu46J4qFIlK0mWJUYko-mpjOhalaHMJtyR97XGlrD_uoeEjFrmsVPzIc1theE1Cz2O-vqhtuxUEyuZRj_AmilV6pM0Q?key=NZsbhft-UgpfY2ZKTYnezWgM)
+
+
+
+#### MinIO
+
+https://min.io/https://nginx.org
+
+Minio Aistor foi projetado para permitir que as empresas consolidem todos os seus dados em um espaço para nome de nuvem privada única. Arquitetado usando os mesmos princípios que os hiperescaladores, Aistor oferece desempenho em escala por uma fração do custo em comparação com a nuvem pública.
+
+É uma plataforma de armazenamento de objetos de alta performance, compatível com o protocolo S3 da Amazon, projetada para armazenar grandes volumes de dados não estruturados.
+
 
 
 Assim terminam as informações sobre esta configuração.
