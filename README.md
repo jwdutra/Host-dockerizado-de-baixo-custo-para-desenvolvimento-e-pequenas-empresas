@@ -251,7 +251,7 @@ Servidor Web, já com configuração de nome e domínio, também com HTTPS confi
 
 #### MinIO
 
-https://min.io/https://nginx.org
+[https://min.io](https://min.io)
 
 Minio Aistor foi projetado para permitir que as empresas consolidem todos os seus dados em um espaço para nome de nuvem privada única. Arquitetado usando os mesmos princípios que os hiperescaladores, Aistor oferece desempenho em escala por uma fração do custo em comparação com a nuvem pública.
 
