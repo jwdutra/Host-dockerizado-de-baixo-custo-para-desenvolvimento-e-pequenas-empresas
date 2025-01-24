@@ -17,7 +17,7 @@ services:
 
   # Serviço Portainer
   portainer:
-    image: portainer/portainer-ee:2.21.5  # Imagem do Portainer CE
+    image: portainer/portainer-ee:2.21.5  # Imagem do Portainer EE com direito a até três nodes de cluster gratuítos par uso com Swarm ou Kubertetes
     command: -H tcp://tasks.agent:9001 --tlsskipverify  # Comando para conectar ao agente
     #ports:
     #  - "9443:9443"  # Porta HTTPS (comentada)
